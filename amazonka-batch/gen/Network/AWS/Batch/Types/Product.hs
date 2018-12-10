@@ -1484,7 +1484,7 @@ instance FromJSON JobDetail where
                      <*> (x .: "jobId")
                      <*> (x .: "jobQueue")
                      <*> (x .: "status")
-                     <*> (x .: "startedAt")
+                     <*> (x .:? "startedAt")
                      <*> (x .: "jobDefinition"))
 
 instance Hashable JobDetail where

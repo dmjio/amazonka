@@ -1334,7 +1334,7 @@ data JobDetail = JobDetail'
   , _jdJobId           :: !Text
   , _jdJobQueue        :: !Text
   , _jdStatus          :: !JobStatus
-  , _jdStartedAt       :: !Integer
+  , _jdStartedAt       :: !(Maybe Integer)
   , _jdJobDefinition   :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -1379,10 +1379,9 @@ jobDetail
     -> Text -- ^ 'jdJobId'
     -> Text -- ^ 'jdJobQueue'
     -> JobStatus -- ^ 'jdStatus'
-    -> Integer -- ^ 'jdStartedAt'
     -> Text -- ^ 'jdJobDefinition'
     -> JobDetail
-jobDetail pJobName_ pJobId_ pJobQueue_ pStatus_ pStartedAt_ pJobDefinition_ =
+jobDetail pJobName_ pJobId_ pJobQueue_ pStatus_ pJobDefinition_ =
   JobDetail'
     { _jdStoppedAt = Nothing
     , _jdCreatedAt = Nothing
@@ -1398,7 +1397,7 @@ jobDetail pJobName_ pJobId_ pJobQueue_ pStatus_ pStartedAt_ pJobDefinition_ =
     , _jdJobId = pJobId_
     , _jdJobQueue = pJobQueue_
     , _jdStatus = pStatus_
-    , _jdStartedAt = pStartedAt_
+    , _jdStartedAt = Nothing
     , _jdJobDefinition = pJobDefinition_
     }
 
@@ -1460,7 +1459,7 @@ jdStatus :: Lens' JobDetail JobStatus
 jdStatus = lens _jdStatus (\ s a -> s{_jdStatus = a})
 
 -- | The Unix time stamp (in seconds and milliseconds) for when the job was started (when the job transitioned from the @STARTING@ state to the @RUNNING@ state).
-jdStartedAt :: Lens' JobDetail Integer
+jdStartedAt :: Lens' JobDetail (Maybe Integer)
 jdStartedAt = lens _jdStartedAt (\ s a -> s{_jdStartedAt = a})
 
 -- | The job definition that is used by this job.
